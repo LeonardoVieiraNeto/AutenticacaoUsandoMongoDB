@@ -21,9 +21,13 @@ var users = require('./routes/users');
 
 var app = express();
 
-// view engine setup
+//console.log('log 1 dentro do app.js');
+
+// // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+
+//console.log('Log 2 dentro do app.js');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -31,82 +35,98 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+//console.log('Log 3 dentro do app.js');
+
 // Handle Sessions
 app.use(session({
-  secret:'secret',
+   secret:'secret',
   saveUninitialized: true,
-  resave: true
-}));
+   resave: true
+ }));
 
-// Passport
-app.use(passport.initialize());
-app.use(passport.session());
+//console.log('Log 3 dentro do app.js');
 
-// Validator
-app.use(expressValidator({
-  errorFormatter: function(param, msg, value) {
-      var namespace = param.split('.')
-      , root    = namespace.shift()
-      , formParam = root;
+ // Passport
+ app.use(passport.initialize());
+ app.use(passport.session());
 
-    while(namespace.length) {
-      formParam += '[' + namespace.shift() + ']';
-    }
-    return {
-      param : formParam,
-      msg   : msg,
-      value : value
-    };
-  }
-}));
+ // Validator
+ app.use(expressValidator({
+   errorFormatter: function(param, msg, value) {
+       var namespace = param.split('.')
+       , root    = namespace.shift()
+       , formParam = root;
 
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+     while(namespace.length) {
+       formParam += '[' + namespace.shift() + ']';
+     }
+     return {
+       param : formParam,
+       msg   : msg,
+       value : value
+     };
+   }
+ }));
 
-app.use(flash());
-app.use(function (req, res, next) {
-  res.locals.messages = require('express-messages')(req, res);
-  next();
-});
+//console.log('Log 4 dentro do app.js');
 
-app.get('*', function(req, res, next){
+ app.use(cookieParser());
+ app.use(express.static(path.join(__dirname, 'public')));
+
+ app.use(flash());
+ app.use(function (req, res, next) {
+   res.locals.messages = require('express-messages')(req, res);
+   next();
+ });
+
+//console.log('Log 5 dentro do app.js');
+
+ app.get('*', function(req, res, next){
   res.locals.user = req.user || null;
-  next();
-});
+   next();
+ });
 
-app.use('/', routes);
-app.use('/users', users);
+//console.log('Log 6 dentro do app.js');
+
+ app.use('/', routes);
+ app.use('/users', users);
+
+//console.log('Log 7');
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
+ app.use(function(req, res, next) {
+   var err = new Error('Not Found');
+   err.status = 404;
+   next(err);
+ });
 
-// error handlers
+ // error handlers
+
+//console.log('Log 8 dentro do app.js');
 
 // development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-      message: err.message,
-      error: err
-    });
-  });
-}
+ // will print stacktrace
+ if (app.get('env') === 'development') {
+   app.use(function(err, req, res, next) {
+     res.status(err.status || 500);
+     res.render('error', {
+       message: err.message,
+       error: err
+     });
+   });
+ }
+
+//console.log('Log 9 dentro do app.js');
 
 // production error handler
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: {}
-  });
-});
+   res.render('error', {
+     message: err.message,
+     error: {}
+   });
+ });
 
 
-module.exports = app;
+ module.exports = app;

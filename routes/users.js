@@ -7,13 +7,15 @@ var LocalStrategy = require('passport-local').Strategy;
 
 var User = require('../models/user');
 
+//console.log('Log 1 dentro do user.js');
+
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+  res.send('respondendo a solicitação.');
 });
 
 router.get('/register', function(req, res, next) {
-  res.render('register',{title:'Register'});
+  res.render('register',{title:'Registrar'});
 });
 
 router.get('/login', function(req, res, next) {
@@ -21,9 +23,9 @@ router.get('/login', function(req, res, next) {
 });
 
 router.post('/login',
-  passport.authenticate('local',{failureRedirect:'/users/login', failureFlash: 'Invalid username or password'}),
+  passport.authenticate('local',{failureRedirect:'/users/login', failureFlash: 'Usuário ou senha inválido'}),
   function(req, res) {
-   req.flash('success', 'You are now logged in');
+   req.flash('success', 'Você está logado!!!');
    res.redirect('/');
 });
 
@@ -41,7 +43,7 @@ passport.use(new LocalStrategy(function(username, password, done){
   User.getUserByUsername(username, function(err, user){
     if(err) throw err;
     if(!user){
-      return done(null, false, {message: 'Unknown User'});
+      return done(null, false, {message: 'Usuário não existente.'});
     }
 
     User.comparePassword(password, user.password, function(err, isMatch){
@@ -49,7 +51,7 @@ passport.use(new LocalStrategy(function(username, password, done){
       if(isMatch){
         return done(null, user);
       } else {
-        return done(null, false, {message:'Invalid Password'});
+        return done(null, false, {message:'Senha inválida'});
       }
     });
   });
@@ -71,12 +73,12 @@ router.post('/register', upload.single('profileimage') ,function(req, res, next)
   }
 
   // Form Validator
-  req.checkBody('name','Name field is required').notEmpty();
-  req.checkBody('email','Email field is required').notEmpty();
-  req.checkBody('email','Email is not valid').isEmail();
-  req.checkBody('username','Username field is required').notEmpty();
-  req.checkBody('password','Password field is required').notEmpty();
-  req.checkBody('password2','Passwords do not match').equals(req.body.password);
+  req.checkBody('name','Nome é obrigatório.').notEmpty();
+  req.checkBody('email','Email é obrigatório.').notEmpty();
+  req.checkBody('email','Email é não válido.').isEmail();
+  req.checkBody('username','Username é obrigatório').notEmpty();
+  req.checkBody('password','Senha é obrigatório.').notEmpty();
+  req.checkBody('password2','As senhas não são iguais.').equals(req.body.password);
 
   // Check Errors
   var errors = req.validationErrors();
@@ -99,7 +101,7 @@ router.post('/register', upload.single('profileimage') ,function(req, res, next)
       console.log(user);
     });
 
-    req.flash('success', 'You are now registered and can login');
+    req.flash('success', 'Você está cadastrado e pronto para logar!!');
 
     res.location('/');
     res.redirect('/');
@@ -108,7 +110,7 @@ router.post('/register', upload.single('profileimage') ,function(req, res, next)
 
 router.get('/logout', function(req, res){
   req.logout();
-  req.flash('success', 'You are now logged out');
+  req.flash('success', 'Você não está logado!!!');
   res.redirect('/users/login');
 });
 

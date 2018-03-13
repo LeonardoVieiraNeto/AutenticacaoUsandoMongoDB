@@ -4,6 +4,8 @@
  * Module dependencies.
  */
 
+//console.log('Log 1 dentro do www');
+
 var app = require('../app');
 var debug = require('debug')('nodeauth:server');
 var http = require('http');

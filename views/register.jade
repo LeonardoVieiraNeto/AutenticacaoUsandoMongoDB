@@ -1,28 +1,27 @@
 extends layout
 
 block content
- h2.page-header Register
- p Please register using the form below
+ h2.page-header Cadastro
  if errors
   each error, i in errors
    div.alert.alert-danger #{error.msg}
  form(method='post', action='/users/register',enctype='multipart/form-data')
   .form-group
-   label Name
-   input.form-control(name='name', type='text', placeholder='Enter Name')
+   label Nome
+   input.form-control(name='name', type='text', placeholder='Digite o Nome')
   .form-group
    label Email
-   input.form-control(name='email', type='email', placeholder='Enter Email')
+   input.form-control(name='email', type='email', placeholder='Digite o Email')
   .form-group
    label Username
-   input.form-control(name='username', type='text', placeholder='Enter Username')
+   input.form-control(name='username', type='text', placeholder='Digite o úsuário')
   .form-group
-   label Password
-   input.form-control(name='password', type='password', placeholder='Enter Password')
+   label Senha
+   input.form-control(name='password', type='password', placeholder='Digite a senha')
   .form-group
-   label Confirm Password
-   input.form-control(name='password2', type='password', placeholder='Confirm Password')
+   label Confirme a Senha
+   input.form-control(name='password2', type='password', placeholder='Confirme a senha')
   .form-group
-   label Profile Image
+   label Imagem do Perfil
    input.form-control(name='profileimage', type='file')
-  input.btn.btn-primary(type='submit', name='submit',value='Register')
+  input.btn.btn-primary(type='submit', name='submit',value='Cadastre')

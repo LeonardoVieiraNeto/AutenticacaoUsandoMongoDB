@@ -1,7 +1,7 @@
 doctype html
 html(lang='en')
   head
-    title Welcome
+    title Exemplo de autenticação com Node e MongoDB
     link(href='/stylesheets/bootstrap.css', rel='stylesheet')
     link(href='/stylesheets/style.css', rel='stylesheet')
   body
@@ -20,8 +20,8 @@ html(lang='en')
              li(class=(title == 'Members' ? 'active' : ''))
                a(href='/') Members
             if !user
-             li(class=(title == 'Register' ? 'active' : ''))
-               a(href='/users/register') Register
+             li(class=(title == 'Cadastro' ? 'active' : ''))
+               a(href='/users/register') Cadastro
              li(class=(title == 'Login' ? 'active' : ''))
                a(href='/users/login') Login
           ul.nav.navbar-nav.navbar-right
