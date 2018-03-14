@@ -65,10 +65,10 @@ router.post('/register', upload.single('profileimage') ,function(req, res, next)
   var password2 = req.body.password2;
 
   if(req.file){
-  	console.log('Uploading File...');
+  	//console.log('Uploading File...');
   	var profileimage = req.file.filename;
   } else {
-  	console.log('No File Uploaded...');
+  	//console.log('No File Uploaded...');
   	var profileimage = 'noimage.jpg';
   }
 
@@ -98,7 +98,7 @@ router.post('/register', upload.single('profileimage') ,function(req, res, next)
 
     User.createUser(newUser, function(err, user){
       if(err) throw err;
-      console.log(user);
+      //console.log(user);
     });
 
     req.flash('success', 'Você está cadastrado e pronto para logar!!');
